@@ -1,0 +1,11 @@
+Total YoY% = 
+IF(
+	ISFILTERED('Dates'[Date]),
+	ERROR("Time intelligence quick measures can only be grouped or filtered by the Power BI-provided date hierarchy or primary date column."),
+	VAR __PREV_MONTH =
+		CALCULATE(
+			SUM('BS-EN-1-2-4'[Total]),
+			DATEADD('Dates'[Date], -1, YEAR)
+		)
+	RETURN
+		if(isblank(DIVIDE(SUM('BS-EN-1-2-4'[Total]) - __PREV_MONTH, __PREV_MONTH)),0,DIVIDE(SUM('BS-EN-1-2-4'[Total]) - __PREV_MONTH, __PREV_MONTH)))
